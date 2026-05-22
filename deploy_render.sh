@@ -61,13 +61,13 @@ sed -n '1,120p' "$RENDER_YAML"
 echo
 echo "Próximos passos (manuais / verifique antes de executar):"
 echo "1) Verifique que seu repositório está com todos os arquivos prontos: app.py, requirements.txt, frontend/, faq.txt, docs/."
-echo "2) Faça commit das mudanças locais e confirme remote:
-    git add .
-    git commit -m 'Prepare render.yaml for deploy'
-    git remote -v  # confirme remote origin apontando para seu repositório GitHub"
-echo "3) Push para a branch configurada (ex.: main):
-    git push origin $(git rev-parse --abbrev-ref HEAD)"
-echo "4) No painel do Render: New -> Web Service -> Connect Repository -> selecione a branch 'main' e, se desejar, carregue este render.yaml ou deixe o Render detectar o arquivo." 
+echo "2) Faça commit das mudanças locais e confirme remote:"
+echo "   git add ."
+echo "   git commit -m 'Prepare render.yaml for deploy'"
+echo "   git remote -v  # confirme remote origin apontando para seu repositório GitHub"
+echo "3) Push para a branch configurada (ex.: main):"
+echo "   git push origin \$(git rev-parse --abbrev-ref HEAD)"
+echo "4) No painel do Render: New -> Web Service -> Connect Repository -> selecione a branch 'main' e, se desejar, carregue este render.yaml ou deixe o Render detectar o arquivo."
 echo "5) No painel do serviço, configure as Environment Variables / Secrets: OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY, LLM_PROVIDER, etc."
 echo
 echo "Observações de segurança: NÃO comite chaves de API. Use o painel do Render para adicionar secrets."
