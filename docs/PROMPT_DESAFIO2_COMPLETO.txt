@@ -1,0 +1,174 @@
+================================================================
+PROMPT PROFISSIONAL — INSURMINDS VIDABOT
+Geração do projeto completo para entrega do Desafio II
+I²A² — Atividade Obrigatória 2 | Prazo: 29/05/2026
+================================================================
+
+CONTEXTO DA ENTREGA:
+Estou participando do programa I²A² (Institut d'Intelligence Artificielle Appliquée),
+curso InsurMinds — Agentes Inteligentes com Redes Generativas.
+
+O Desafio II é ELIMINATÓRIO e exige entrega até 29/05/2026 às 23h59 para:
+  challenges@i2a2.academy
+  Assunto: "InsurMinds - Atividade obrigatória 2"
+
+OBJETIVO DO DESAFIO II:
+Criar um ChatBot de Atendimento ao Segurado baseado em IA (LLM + RAG) que:
+- Responda perguntas frequentes sobre Seguros de Vida
+- Use RAG para recuperar informações da base de conhecimento
+- Tenha interface funcional e demonstrável
+- Seja documentado tecnicamente
+
+O QUE JÁ TENHO (não precisa regenerar):
+✅ frontend/index.html — Chatbot completo (VidaBot, InsurMinds)
+   - UI navy/gold, chat funcional, painel RAG animado, chunks em tempo real
+   - Integração direta com Claude API (claude-sonnet-4-20250514)
+   - RAG simulado por keywords com score de relevância
+   - Histórico de conversa multi-turno
+
+✅ app.py — Backend Flask com endpoint /api/chat e busca RAG
+✅ faq.txt — 15 chunks de seguros de vida (coberturas, sinistros, carências, VGBL/PGBL)
+✅ requirements.txt — anthropic, flask, flask-cors
+✅ README.md — Setup e instruções de deploy
+✅ docs/relatorio_insurminds_vidabot.pdf — Relatório técnico (7 seções, A4)
+✅ docs/arquitetura_rag.svg — Diagrama de arquitetura
+
+STACK DO PROJETO:
+- Linguagem: Python 3.11
+- Backend: Flask + Anthropic SDK
+- Frontend: HTML5/CSS3/JavaScript puro
+- LLM: Claude Sonnet 4 (Anthropic)
+- RAG: busca por keywords sobre faq.txt (chunks texto puro)
+- Deploy: Render.com
+- Nome do produto: VidaBot | Empresa fictícia: InsurMinds
+
+================================================================
+O QUE VOCÊ PRECISA GERAR AGORA:
+================================================================
+
+Gere APENAS os itens abaixo, em português brasileiro, prontos para entrega acadêmica.
+
+─────────────────────────────────────────────────────────────────
+1. EVIDÊNCIAS DE EXECUÇÃO (screenshots_descricao.md)
+─────────────────────────────────────────────────────────────────
+Crie um arquivo Markdown chamado "evidencias_execucao.md" descrevendo
+detalhadamente 8 telas/momentos do chatbot em funcionamento, como se
+fossem descrições de prints para incluir no relatório. Para cada evidência:
+- Título da evidência (ex: "Tela Inicial do VidaBot")
+- Descrição do que aparece na tela (UI, elementos visíveis)
+- O que o usuário fez
+- Resultado obtido
+- Chunk RAG ativado (se aplicável)
+
+Cobrir obrigatoriamente:
+1. Tela inicial / boas-vindas do VidaBot
+2. Pergunta sobre sinistro + RAG ativado com chunks visíveis
+3. Pergunta sobre carência + resposta com regulação SUSEP citada
+4. Atalho rápido do sidebar sendo usado
+5. Painel RAG expandido mostrando scores de relevância
+6. Fluxo animado RAG (6 etapas visuais)
+7. Pergunta fora do domínio → bot direcionando para atendimento humano
+8. Estatísticas de uso ao final de uma sessão
+
+─────────────────────────────────────────────────────────────────
+2. DIAGRAMA DE FLUXO CONVERSACIONAL (fluxo_atendimento.md)
+─────────────────────────────────────────────────────────────────
+Crie um arquivo Markdown com o fluxo conversacional em formato de árvore
+de texto (ASCII/Markdown) cobrindo os 5 tipos principais de consulta:
+
+Tipo A: Abertura de sinistro
+Tipo B: Dúvidas sobre cobertura
+Tipo C: Cancelamento/portabilidade
+Tipo D: Segunda via / documentos
+Tipo E: Solicitação de atendimento humano
+
+Para cada tipo: entrada do usuário → RAG → resposta bot → pergunta de follow-up
+
+─────────────────────────────────────────────────────────────────
+3. ANÁLISE RAG vs FINE-TUNING (analise_tecnica.md)
+─────────────────────────────────────────────────────────────────
+Escreva uma análise técnica de 400 palavras justificando por que RAG foi
+escolhido em vez de Fine-Tuning para este projeto, referenciando:
+- Os critérios da tabela comparativa vista em aula (I²A², Prof. Celso Azevedo)
+- Especificidades do setor de seguros (SUSEP, atualizações frequentes)
+- Custo, manutenibilidade e rastreabilidade de fontes
+- Triangulo de esforço: Prompt Engineering → RAG → Fine-Tuning → Trained Model
+
+─────────────────────────────────────────────────────────────────
+4. TEMPLATE DO E-MAIL DE ENTREGA (email_entrega.txt)
+─────────────────────────────────────────────────────────────────
+Crie o template do e-mail de entrega completo, pronto para preencher:
+
+Para: challenges@i2a2.academy
+Assunto: InsurMinds - Atividade obrigatória 2
+
+Corpo do e-mail com:
+- Saudação formal
+- Nome do Grupo: [NOME DO GRUPO]
+- Integrantes: [PREENCHER]
+- Representante: [PREENCHER]
+- Link do ChatBot: [LINK APÓS DEPLOY NO RENDER]
+- Breve descrição da solução (3 parágrafos técnicos)
+- Lista de anexos incluídos
+- Encerramento formal
+
+─────────────────────────────────────────────────────────────────
+5. SCRIPT DE DEPLOY AUTOMATIZADO (deploy_render.sh)
+─────────────────────────────────────────────────────────────────
+Crie um script bash comentado com os passos para:
+1. Verificar se o projeto está pronto para deploy
+2. Inicializar git e fazer commit de todos os arquivos
+3. Criar o arquivo render.yaml (configuração do Render)
+4. Instruções do que fazer no painel do Render (como comentários)
+
+─────────────────────────────────────────────────────────────────
+6. QUESTIONÁRIO DE AUTOAVALIAÇÃO (autoavaliacao.md)
+─────────────────────────────────────────────────────────────────
+Crie um documento de autoavaliação técnica do projeto respondendo:
+- O que foi implementado vs o que foi proposto no desafio (checklist)
+- Quais critérios do Ciclo de Vida GenAI foram atendidos
+- Quais melhorias seriam implementadas com mais tempo
+- Lições aprendidas sobre RAG aplicado a seguros
+- Referências técnicas usadas (I²A² aulas, documentação Anthropic, etc.)
+
+================================================================
+INSTRUÇÕES DE FORMATO E QUALIDADE:
+================================================================
+- Todos os documentos em português brasileiro, tom acadêmico-profissional
+- Linguagem técnica mas acessível (banca de avaliação acadêmica)
+- Referenciar a aula do Prof. Celso Azevedo (I²A², Aula 04 RAG) quando pertinente
+- Nome do bot: VidaBot | Empresa: InsurMinds | Ramo: Seguros de Vida
+- Reguladora: SUSEP | Regulação base: CNSP 294/2013
+- Citar RAG Architecture (Encoder → Retriever → Knowledge Base → Generator)
+- Não inventar métricas; usar dados plausíveis e coerentes com o projeto real
+- Cada arquivo deve ser autocontido e pronto para incluir na entrega
+
+================================================================
+CHECKLIST FINAL DA ENTREGA (para usar na revisão):
+================================================================
+Antes de enviar o e-mail, verificar:
+
+ARTEFATOS TÉCNICOS:
+[ ] frontend/index.html — chatbot funcionando no browser
+[ ] app.py — backend Flask rodando local (python app.py)
+[ ] faq.txt — base de conhecimento com 15+ chunks
+[ ] requirements.txt — dependências completas
+[ ] .env.example — variável ANTHROPIC_API_KEY
+
+DOCUMENTAÇÃO:
+[ ] docs/relatorio_insurminds_vidabot.pdf — relatório técnico (PDF)
+[ ] docs/arquitetura_rag.svg — diagrama de arquitetura
+[ ] docs/evidencias_execucao.md — screenshots/evidências
+[ ] docs/fluxo_atendimento.md — fluxo conversacional
+[ ] README.md — instruções de setup
+
+E-MAIL:
+[ ] Para: challenges@i2a2.academy
+[ ] Assunto EXATO: InsurMinds - Atividade obrigatória 2
+[ ] Nome do grupo no corpo
+[ ] Lista de integrantes (nome, e-mail, celular)
+[ ] Link do chatbot online (se disponível)
+[ ] Todos os artefatos anexados
+[ ] Cópia enviada para todos os integrantes do grupo
+
+================================================================

@@ -1,0 +1,69 @@
+Para: challenges@i2a2.academy
+Assunto: InsurMinds - Atividade obrigatória 2
+CC: [e-mails de todos os integrantes do grupo]
+
+─────────────────────────────────────────────────────────────────
+Prezada equipe do I²A²,
+
+Encaminhamos a entrega do Desafio II — Atividade Obrigatória 2 do programa 
+InsurMinds — Agentes Inteligentes com Redes Generativas.
+
+─────────────────────────────────────────────────────────────────
+1. IDENTIFICAÇÃO DO GRUPO
+─────────────────────────────────────────────────────────────────
+Nome do Grupo: [NOME DO GRUPO]
+
+Integrantes:
+• [Nome Completo 1] | [email1@email.com] | [celular]
+• [Nome Completo 2] | [email2@email.com] | [celular]
+• [Nome Completo 3] | [email3@email.com] | [celular]
+
+Representante do Grupo: [Nome do Representante]
+
+─────────────────────────────────────────────────────────────────
+2. LINK DO CHATBOT (versão online)
+─────────────────────────────────────────────────────────────────
+URL do VidaBot: [https://insurminds-vidabot.onrender.com]
+(Disponível 24h. Caso o serviço esteja em cold start, aguardar ~30s.)
+
+─────────────────────────────────────────────────────────────────
+3. DESCRIÇÃO DA SOLUÇÃO
+─────────────────────────────────────────────────────────────────
+Desenvolvemos o VidaBot, um assistente virtual especializado em Seguros de Vida 
+para a InsurMinds, construído com arquitetura RAG (Retrieval-Augmented Generation) 
+e integração com o modelo de linguagem Claude (Anthropic).
+
+A solução implementa o fluxo RAG completo: recebe a pergunta do segurado, realiza 
+busca por relevância em uma base de conhecimento estruturada (faq.txt com 15 chunks 
+de condições gerais e FAQs de seguros de vida), injeta o contexto recuperado no 
+system prompt e envia para o Claude gerar uma resposta embasada na regulação SUSEP. 
+A interface exibe em tempo real os chunks ativados e seus scores de relevância.
+
+A escolha do RAG em detrimento do Fine-Tuning foi motivada pelas características 
+do domínio: dados de seguros mudam com frequência (novas circulares SUSEP), o RAG 
+permite atualização da base sem retreinamento, mantém rastreabilidade das fontes 
+(requisito de conformidade regulatória) e apresenta custo operacional significativamente 
+menor — alinhado à pirâmide de aprimoramento de modelos apresentada na Aula 04.
+
+─────────────────────────────────────────────────────────────────
+4. ANEXOS INCLUÍDOS
+─────────────────────────────────────────────────────────────────
+insurminds-vidabot.zip contendo:
+
+  Código Fonte:
+  • frontend/index.html ........... Interface do chatbot (HTML/CSS/JS)
+  • app.py ........................ Backend Flask + RAG engine
+  • faq.txt ....................... Base de conhecimento (15 chunks)
+  • requirements.txt .............. Dependências Python
+
+  Documentação:
+  • docs/relatorio_insurminds_vidabot.pdf ... Relatório técnico (7 seções)
+  • docs/arquitetura_rag.svg ................ Diagrama de arquitetura RAG
+  • README.md ............................... Setup e deploy
+
+─────────────────────────────────────────────────────────────────
+Ficamos à disposição para qualquer esclarecimento.
+
+Atenciosamente,
+[Nome do Representante]
+Em nome do Grupo [NOME DO GRUPO]

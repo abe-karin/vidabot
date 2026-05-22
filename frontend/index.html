@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InsurMinds — Assistente de Seguros de Vida</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1B2E45;
+    --navy-light: #243B55;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --cream: #F5F0E8;
+    --cream-dark: #EAE3D6;
+    --white: #FDFCFA;
+    --text-main: #0D1B2A;
+    --text-muted: #5A6978;
+    --text-light: #8A96A3;
+    --border: rgba(13,27,42,0.12);
+    --bot-bg: #FFFFFF;
+    --user-bg: #0D1B2A;
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 0.3px;
+  }
+
+  .logo-text span { color: var(--gold); }
+
+  .header-badges {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-online {
+    background: rgba(34,197,94,0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34,197,94,0.3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .badge-online::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .badge-ia {
+    background: rgba(201,168,76,0.15);
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  /* LAYOUT PRINCIPAL */
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr 300px;
+    gap: 0;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 24px;
+    gap: 20px;
+    min-height: 0;
+  }
+
+  /* PAINEL ESQUERDO */
+  .sidebar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .panel {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .panel-body { padding: 16px 20px; }
+
+  .quick-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.3;
+  }
+
+  .quick-btn:last-child { margin-bottom: 0; }
+
+  .quick-btn:hover {
+    background: var(--cream);
+    border-color: var(--gold);
+    color: var(--navy);
+  }
+
+  .quick-btn .icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .agent-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .agent-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .agent-info h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .agent-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .stat-label { color: var(--text-muted); }
+  .stat-val {
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .stat-val.green { color: #16a34a; }
+
+  /* CHAT CENTRAL */
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .chat-topbar {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+
+  .chat-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--text-main);
+  }
+
+  .chat-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .rag-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-track { background: transparent; }
+  .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .msg-row {
+    display: flex;
+    gap: 10px;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-row.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bot .msg-avatar {
+    background: var(--navy);
+    border: 1.5px solid var(--gold);
+  }
+
+  .user .msg-avatar {
+    background: var(--cream-dark);
+    border: 1.5px solid var(--border);
+  }
+
+  .bubble {
+    max-width: 72%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .bot .bubble {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-top-left-radius: 4px;
+    color: var(--text-main);
+  }
+
+  .user .bubble {
+    background: var(--navy);
+    color: var(--white);
+    border-top-right-radius: 4px;
+  }
+
+  .bubble strong { font-weight: 600; }
+  .bubble ul { padding-left: 16px; margin: 6px 0; }
+  .bubble li { margin-bottom: 4px; }
+
+  .rag-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .typing-bubble {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .typing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-light);
+    animation: typingBounce 1.3s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* CHIPS DE SUGESTÃO */
+  .suggestions {
+    padding: 0 24px 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--cream);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+
+  .chip:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* INPUT */
+  .input-area {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+
+  .input-wrap {
+    flex: 1;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    gap: 8px;
+    transition: border-color 0.15s;
+  }
+
+  .input-wrap:focus-within {
+    border-color: var(--gold);
+    background: var(--white);
+  }
+
+  .input-wrap input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-main);
+    outline: none;
+  }
+
+  .input-wrap input::placeholder { color: var(--text-light); }
+
+  .send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--navy);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .send-btn:hover { background: var(--navy-light); transform: scale(1.04); }
+  .send-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  .send-btn svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .end-btn {
+    width: auto;
+    min-width: 120px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.35);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    height: 42px;
+    background: rgba(201,168,76,0.06);
+  }
+
+  .end-btn:hover {
+    background: rgba(201,168,76,0.14);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .end-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .session-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,27,42,0.66);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 20px;
+  }
+
+  .session-modal.open { display: flex; }
+
+  .session-card {
+    width: min(720px, 100%);
+    background: var(--white);
+    border-radius: 22px;
+    border: 1px solid rgba(201,168,76,0.25);
+    box-shadow: 0 24px 80px rgba(13,27,42,0.3);
+    overflow: hidden;
+    animation: modalIn 0.25s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .session-card-header {
+    padding: 18px 22px;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .session-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+  }
+
+  .session-card-sub {
+    font-size: 13px;
+    color: rgba(253,252,250,0.82);
+    margin-top: 4px;
+  }
+
+  .session-card-body {
+    padding: 22px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .session-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .session-stat {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: var(--cream);
+  }
+
+  .session-stat-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .session-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .session-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .session-list li {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text-main);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .session-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .session-action {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .session-action.primary {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+
+  .session-action:hover { transform: translateY(-1px); }
+
+  @media (max-width: 920px) {
+    .session-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 560px) {
+    .session-grid { grid-template-columns: 1fr; }
+  }
+
+  /* PAINEL DIREITO — RAG */
+  .sidebar-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rag-panel {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .rag-header {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rag-header-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .rag-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .rag-empty {
+    color: var(--text-light);
+    font-size: 12px;
+    text-align: center;
+    padding: 24px 0;
+    font-style: italic;
+  }
+
+  .rag-chunk {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    color: var(--text-main);
+    line-height: 1.5;
+    animation: slideIn 0.3s ease;
+  }
+
+  .rag-chunk-source {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .rag-score {
+    font-size: 10px;
+    color: var(--text-light);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .score-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .score-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* FLUXO PANEL */
+  .flow-panel {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .flow-steps { padding: 16px; }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    border: 1.5px solid var(--border);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .step.active .step-num {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+  }
+
+  .step-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .step.active .step-text { color: var(--text-main); font-weight: 500; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .footer a { color: var(--gold); text-decoration: none; }
+  
+  /* RESPONSIVO: ajustes simples para telas menores */
+  img, svg { max-width: 100%; height: auto; }
+
+  @media (max-width: 1024px) {
+    .main { grid-template-columns: 220px 1fr; max-width: 100%; padding: 18px; gap: 16px; }
+    .sidebar-right { display: none; }
+    .header { padding: 0 16px; height: 56px; }
+    .logo-text { font-size: 18px; }
+    .panel { border-radius: 14px; }
+  }
+
+  @media (max-width: 768px) {
+    .main { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
+    .sidebar-left { order: 2; }
+    .chat-container { order: 1; }
+    .logo-text { display: none; }
+    .logo-icon { width: 40px; height: 40px; font-size: 18px; }
+    .messages { padding: 12px; }
+    .bubble { max-width: 85%; font-size: 15px; }
+    .agent-avatar { width: 40px; height: 40px; }
+    .input-area { padding: 10px; }
+    .input-wrap { padding: 8px 10px; border-radius: 12px; }
+    .send-btn { width: 38px; height: 38px; border-radius: 10px; }
+    .panel-header { font-size: 10px; padding: 10px 12px; }
+    .suggestions { padding-left: 12px; padding-right: 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .header { height: 56px; padding: 0 12px; }
+    .logo-icon { width: 36px; height: 36px; }
+    .main { padding: 8px; gap: 10px; }
+    .messages { padding: 8px; }
+    .bubble { max-width: 100%; font-size: 14px; padding: 10px 12px; }
+    .suggestions { padding: 0 12px 10px; gap: 6px; }
+    .quick-btn { font-size: 13px; padding: 8px 10px; }
+    .flow-panel, .rag-panel { display: none; }
+    .panel { border-radius: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    <div class="logo-text">Insur<span>Minds</span></div>
+  </div>
+  <div class="header-badges">
+    <span class="badge badge-online">Online</span>
+    <span class="badge badge-ia">IA + RAG</span>
+    <select id="provider" style="margin-left:12px;padding:6px;border-radius:8px;border:1px solid rgba(13,27,42,0.08);font-size:13px">
+      <option value="openai">OpenAI</option>
+      <option value="anthropic">Anthropic</option>
+      <option value="gemini">Google Gemini</option>
+    </select>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- SIDEBAR ESQUERDA -->
+  <aside class="sidebar-left">
+    <!-- Agente -->
+    <div class="panel">
+      <div class="panel-header">Assistente</div>
+      <div class="panel-body">
+        <div class="agent-card">
+          <div class="agent-avatar">🤖</div>
+          <div class="agent-info">
+            <h4>VidaBot</h4>
+            <p>Especialista em Seguros de Vida</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atalhos -->
+    <div class="panel">
+      <div class="panel-header">Tópicos frequentes</div>
+      <div class="panel-body">
+        <button class="quick-btn" onclick="enviarRapido('Como funciona a cobertura por morte natural?')">
+          <span class="icon">🫀</span>Cobertura por morte
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Quero acionar meu seguro de vida. Como faço?')">
+          <span class="icon">📋</span>Acionar sinistro
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Qual a diferença entre morte natural e acidental?')">
+          <span class="icon">📄</span>Tipos de cobertura
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Quais documentos preciso para o resgate?')">
+          <span class="icon">📎</span>Documentos necessários
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Como funciona a carência no seguro de vida?')">
+          <span class="icon">⏳</span>Carência
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Quero cancelar meu seguro de vida')">
+          <span class="icon">❌</span>Cancelamento
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="panel">
+      <div class="panel-header">Sessão atual</div>
+      <div class="panel-body">
+        <div class="stat-row">
+          <span class="stat-label">Perguntas</span>
+          <span class="stat-val" id="stat-perguntas">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Respostas IA</span>
+          <span class="stat-val green" id="stat-respostas">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Chunks RAG</span>
+          <span class="stat-val" id="stat-chunks">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Modelo</span>
+          <span class="stat-val" id="stat-model" style="font-size:11px">—</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CHAT -->
+  <section class="chat-container">
+    <div class="chat-topbar">
+      <div>
+        <div class="chat-title">Atendimento ao Segurado</div>
+        <div class="chat-sub">Seguros de Vida · Dúvidas, sinistros e coberturas</div>
+      </div>
+      <div class="rag-indicator">
+        🔍 RAG ativo — base de conhecimento indexada
+      </div>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="suggestions" id="suggestions">
+      <button class="chip" onclick="enviarRapido('O que é seguro de vida?')">O que é seguro de vida?</button>
+      <button class="chip" onclick="enviarRapido('Tenho direito a resgate?')">Tenho direito a resgate?</button>
+      <button class="chip" onclick="enviarRapido('Como indicar um beneficiário?')">Como indicar beneficiário?</button>
+      <button class="chip" onclick="enviarRapido('Falar com atendente humano')">Falar com humano</button>
+    </div>
+
+    <div class="input-area">
+      <div class="input-wrap">
+        <input type="text" id="input" placeholder="Digite sua dúvida sobre seguro de vida…" onkeydown="if(event.key==='Enter')enviar()" />
+      </div>
+      <button class="end-btn" id="endSessionBtn" onclick="encerrarSessao()" title="Exibir resumo final da sessão">
+        <svg viewBox="0 0 24 24"><path d="M10 6h8a2 2 0 0 1 2 2v8"/><path d="M14 10l6 6"/><path d="M20 10v6h-6"/><path d="M14 14l-8 8"/></svg>
+        Encerrar sessão
+      </button>
+      <button class="send-btn" id="sendBtn" onclick="enviar()">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- SIDEBAR DIREITA — RAG PANEL -->
+  <aside class="sidebar-right">
+    <!-- RAG Panel -->
+    <div class="rag-panel">
+      <div class="rag-header">
+        <span style="font-size:14px">🔍</span>
+        <span class="rag-header-title">Contexto RAG recuperado</span>
+      </div>
+      <div class="rag-body" id="ragBody">
+        <div class="rag-empty">Envie uma mensagem para ver os chunks de conhecimento recuperados pela busca vetorial.</div>
+      </div>
+    </div>
+
+    <!-- Fluxo atual -->
+    <div class="flow-panel">
+      <div class="panel-header" style="padding:16px 20px 12px">Fluxo RAG</div>
+      <div class="flow-steps">
+        <div class="step" id="step1">
+          <div class="step-num">1</div>
+          <div class="step-text">Pergunta recebida</div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-num">2</div>
+          <div class="step-text">Busca vetorial na base</div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-num">3</div>
+          <div class="step-text">Chunks recuperados</div>
+        </div>
+        <div class="step" id="step4">
+          <div class="step-num">4</div>
+          <div class="step-text">Contexto injetado no prompt</div>
+        </div>
+        <div class="step" id="step5">
+          <div class="step-num">5</div>
+          <div class="step-text">LLM gera resposta</div>
+        </div>
+        <div class="step" id="step6">
+          <div class="step-num">6</div>
+          <div class="step-text">Resposta entregue</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<footer class="footer">
+  InsurMinds · Projeto acadêmico · I2A2 · 2026 &nbsp;|&nbsp; Powered by Claude AI + RAG
+</footer>
+
+<div class="session-modal" id="sessionModal" aria-hidden="true">
+  <div class="session-card" role="dialog" aria-modal="true" aria-labelledby="sessionTitle">
+    <div class="session-card-header">
+      <div>
+        <div class="session-card-title" id="sessionTitle">Resumo final da sessão</div>
+        <div class="session-card-sub">Síntese automática das interações realizadas no VidaBot.</div>
+      </div>
+      <div style="font-size:28px; line-height:1">📊</div>
+    </div>
+    <div class="session-card-body">
+      <div class="session-grid">
+        <div class="session-stat">
+          <span class="session-stat-label">Perguntas</span>
+          <div class="session-stat-value" id="summaryPerguntas">0</div>
+        </div>
+        <div class="session-stat">
+          <span class="session-stat-label">Respostas IA</span>
+          <div class="session-stat-value" id="summaryRespostas">0</div>
+        </div>
+        <div class="session-stat">
+          <span class="session-stat-label">Chunks RAG</span>
+          <div class="session-stat-value" id="summaryChunks">0</div>
+        </div>
+        <div class="session-stat">
+          <span class="session-stat-label">Modelo</span>
+          <div class="session-stat-value" id="summaryModel" style="font-size:16px; line-height:1.2">—</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel-header" style="padding:0 0 10px; border-bottom:0; margin-bottom:8px">Últimas dúvidas da sessão</div>
+        <ul class="session-list" id="summaryUltimasPerguntas"></ul>
+      </div>
+
+      <div>
+        <div class="panel-header" style="padding:0 0 10px; border-bottom:0; margin-bottom:8px">Fontes RAG mais consultadas</div>
+        <ul class="session-list" id="summaryFontes"></ul>
+      </div>
+
+      <div class="session-actions">
+        <button class="session-action" onclick="fecharResumo()">Continuar sessão</button>
+        <button class="session-action primary" onclick="novaSessao()">Iniciar nova sessão</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// BASE DE CONHECIMENTO (simula banco vetorial ChromaDB)
+// Em produção: substituir por API Python com ChromaDB real
+// ============================================================
+const BASE_RAG = [
+  {
+    id: "faq_morte_natural",
+    source: "FAQ Seguros de Vida",
+    texto: "COBERTURA POR MORTE NATURAL: O seguro de vida cobre o falecimento do segurado por qualquer causa natural, incluindo doenças, exceto suicídio nos primeiros 2 anos de vigência (carência SUSEP). O capital segurado é pago aos beneficiários cadastrados. Prazo: até 30 dias após entrega de toda documentação.",
+    keywords: ["morte natural", "falecimento", "cobertura", "capital segurado", "óbito"]
+  },
+  {
+    id: "faq_morte_acidental",
+    source: "FAQ Seguros de Vida",
+    texto: "MORTE ACIDENTAL (MCA): Cobre falecimento por acidente de qualquer natureza (trânsito, quedas, afogamento, etc.). Geralmente paga o dobro do capital base. Não cobre: suicídio, guerras, atos terroristas, esportes de alto risco sem cláusula adicional.",
+    keywords: ["morte acidental", "acidente", "MCA", "dobro", "indenização acidental"]
+  },
+  {
+    id: "faq_sinistro_vida",
+    source: "Manual de Sinistros",
+    texto: "COMO ACIONAR O SEGURO DE VIDA: 1) Reunir documentos (certidão de óbito, RG do beneficiário, apólice); 2) Ligar para 0800 ou acessar o portal; 3) Protocolar o sinistro; 4) Aguardar análise (prazo máximo 30 dias, SUSEP). O pagamento é feito por depósito na conta do beneficiário.",
+    keywords: ["acionar", "sinistro", "protocolo", "beneficiário", "como fazer", "processo"]
+  },
+  {
+    id: "faq_documentos",
+    source: "Manual de Sinistros",
+    texto: "DOCUMENTOS PARA SINISTRO DE MORTE: • Certidão de óbito original ou cópia autenticada • RG e CPF do beneficiário • Comprovante de residência do beneficiário • Número da apólice • Boletim de Ocorrência (em caso de acidente) • Laudo médico (em caso de doença). Documentos incompletos suspendem o prazo de análise.",
+    keywords: ["documentos", "certidão de óbito", "RG", "CPF", "boletim de ocorrência", "laudo"]
+  },
+  {
+    id: "faq_carencia",
+    source: "Condições Gerais",
+    texto: "CARÊNCIA NO SEGURO DE VIDA: • Morte natural: 180 dias (6 meses) de carência — exceto para morte acidental, que não tem carência • Suicídio: 2 anos de carência (exigência SUSEP/CNSP) • Doenças preexistentes: podem ter carência especial de até 2 anos dependendo da declaração de saúde • Renovação: carência não se reinicia ao renovar a apólice.",
+    keywords: ["carência", "prazo", "espera", "180 dias", "6 meses", "suicídio", "preexistente"]
+  },
+  {
+    id: "faq_beneficiario",
+    source: "Condições Gerais",
+    texto: "BENEFICIÁRIOS: O segurado pode indicar qualquer pessoa como beneficiário, em qualquer percentual (total: 100%). Sem indicação, o capital vai para herdeiros legais por ordem: cônjuge/companheiro, descendentes, ascendentes. Para alterar beneficiários: formulário assinado na seguradora ou pelo portal online.",
+    keywords: ["beneficiário", "indicar", "alterar", "herdeiro", "percentual", "cônjuge"]
+  },
+  {
+    id: "faq_cancelamento",
+    source: "Condições Gerais",
+    texto: "CANCELAMENTO DO SEGURO DE VIDA: Pode ser solicitado a qualquer momento pelo segurado. • Dentro de 7 dias da contratação: reembolso integral (direito de arrependimento, CDC) • Após 7 dias: reembolso proporcional do prêmio não utilizado, descontada taxa de cancelamento • VGBL/PGBL: resgate sujeito a imposto de renda e prazo de carência de resgate.",
+    keywords: ["cancelar", "cancelamento", "reembolso", "arrependimento", "rescisão"]
+  },
+  {
+    id: "faq_invalidez",
+    source: "FAQ Seguros de Vida",
+    texto: "INVALIDEZ PERMANENTE (IPA/IPT): • IPA = Invalidez Permanente por Acidente: paga capital proporcional ao grau de invalidez por acidente • IPT = Invalidez Permanente Total: cobre qualquer causa. Laudos do INSS ou médico credenciado são necessários. Prazo de análise: 30 dias após documentação completa.",
+    keywords: ["invalidez", "IPA", "IPT", "incapacidade", "deficiência", "acidente invalidez"]
+  },
+  {
+    id: "faq_resgate",
+    source: "FAQ Seguros de Vida",
+    texto: "RESGATE (VGBL/PGBL): Seguros com componente de investimento permitem resgate após carência (normalmente 60 dias a 2 anos). IR sobre rendimentos: tabela regressiva (35% em menos de 2 anos; 10% acima de 10 anos). Resgate parcial: mantém a cobertura reduzida proporcionalmente.",
+    keywords: ["resgate", "VGBL", "PGBL", "investimento", "retirada", "IR", "imposto"]
+  },
+  {
+    id: "faq_premio",
+    source: "Condições Gerais",
+    texto: "PRÊMIO E PAGAMENTO: O prêmio pode ser mensal, trimestral, semestral ou anual. Inadimplência por 30 dias: aviso de suspensão. Inadimplência por 60 dias: cancelamento automático. Reabilitação: possível em até 30 dias após cancelamento, com pagamento do débito e possível exame médico.",
+    keywords: ["prêmio", "pagamento", "mensalidade", "boleto", "inadimplência", "cancelamento automático"]
+  },
+  {
+    id: "faq_doencas_graves",
+    source: "FAQ Seguros de Vida",
+    texto: "DOENÇAS GRAVES (DG): Cláusula adicional que adianta parte do capital em vida ao segurado diagnosticado com doenças como: câncer, infarto, AVC, transplantes, insuficiência renal, cegueira, entre outras listadas na apólice. Carência: 180 dias. Documentação: laudo médico especializado.",
+    keywords: ["doenças graves", "câncer", "infarto", "AVC", "diagnóstico", "doença grave"]
+  },
+  {
+    id: "faq_atendimento_humano",
+    source: "Canais de Atendimento",
+    texto: "ATENDIMENTO HUMANO: Central de Atendimento 24h: 0800-XXX-XXXX. WhatsApp: (11) 9XXXX-XXXX. Portal do Segurado: portal.insurminds.com.br. Horário de atendimento presencial: seg a sex, 8h às 18h. Para casos urgentes de sinistro: linha exclusiva 24h disponível.",
+    keywords: ["humano", "atendente", "telefone", "falar com", "contato", "central", "WhatsApp"]
+  }
+];
+
+// ============================================================
+// SISTEMA RAG SIMULADO
+// ============================================================
+function buscarRAG(pergunta) {
+  const q = pergunta.toLowerCase();
+  const scored = BASE_RAG.map(chunk => {
+    let score = 0;
+    chunk.keywords.forEach(kw => {
+      if (q.includes(kw.toLowerCase())) score += 10;
+    });
+    // busca parcial nas palavras da pergunta
+    const palavras = q.split(/\s+/).filter(p => p.length > 3);
+    palavras.forEach(p => {
+      if (chunk.texto.toLowerCase().includes(p)) score += 3;
+      if (chunk.source.toLowerCase().includes(p)) score += 2;
+    });
+    return { ...chunk, score };
+  });
+  return scored
+    .filter(c => c.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+}
+
+function detectarForaDoDominio(pergunta, chunks) {
+  const q = pergunta.toLowerCase();
+  const sinaisHumanos = [
+    'falar com atendente',
+    'atendente humano',
+    'falar com humano',
+    'atendimento humano',
+    'suporte humano'
+  ];
+
+  if (sinaisHumanos.some(s => q.includes(s))) {
+    return false;
+  }
+
+  const termosDominio = [
+    'seguro', 'seguros', 'vida', 'apólice', 'apolice', 'beneficiário', 'beneficiario',
+    'sinistro', 'cobertura', 'carência', 'carencia', 'cancelamento', 'portabilidade',
+    'documento', 'documentos', 'resgate', 'vgbl', 'pgbl', 'morte', 'doença', 'doenca'
+  ];
+
+  const mencionaDominio = termosDominio.some(t => q.includes(t));
+  const melhorScore = chunks.length > 0 ? chunks[0].score : 0;
+
+  // Se não houver chunks relevantes ou a pontuação for muito baixa, tratamos como fora do escopo.
+  return !mencionaDominio || chunks.length === 0 || melhorScore < 10;
+}
+
+// ============================================================
+// SYSTEM PROMPT COM RAG
+// ============================================================
+const SYSTEM_BASE = `Você é o VidaBot, assistente virtual especializado em Seguros de Vida da InsurMinds.
+
+IDENTIDADE:
+- Nome: VidaBot
+- Empresa: InsurMinds Seguros
+- Especialidade: Seguros de Vida (individual, em grupo, VGBL, PGBL)
+- Tom: empático, claro, profissional, acessível
+
+SUAS RESPONSABILIDADES:
+- Responder dúvidas sobre coberturas, carências, sinistros e documentos
+- Orientar o segurado sobre próximos passos
+- Explicar termos técnicos de forma simples
+- Indicar canais de atendimento humano quando necessário
+- Basear respostas APENAS no contexto fornecido abaixo + conhecimento regulatório
+
+REGULAÇÃO (SUSEP):
+- Prazo máximo de pagamento de sinistro: 30 dias após documentação completa
+- Carência morte natural: 180 dias
+- Carência suicídio: 2 anos
+- Direito de arrependimento: 7 dias após contratação
+
+LIMITES:
+- NÃO confirme valores de indenização específicos sem dados da apólice
+- NÃO tome decisão de aceitação ou recusa de sinistro
+- Para casos jurídicos ou complexos, direcione para atendimento humano
+
+FORMATO DAS RESPOSTAS:
+- Máximo 3 parágrafos
+- Use listas quando houver múltiplos itens
+- Seja direto e objetivo
+- Finalize sempre perguntando se o usuário precisa de mais informações`;
+
+// ============================================================
+// ESTADO DA APLICAÇÃO
+// ============================================================
+let historico = [];
+let totalPerguntas = 0;
+let totalRespostas = 0;
+let totalChunks = 0;
+let fontesConsultadas = {};
+let ocupado = false;
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function adicionarMensagem(role, html, ragTag = false) {
+  const msgs = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+
+  const av = document.createElement('div');
+  av.className = 'msg-avatar';
+  av.textContent = role === 'bot' ? '🤖' : '👤';
+
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+
+  if (ragTag && role === 'bot') {
+    bub.innerHTML = `<div class="rag-tag">🔍 RAG</div>${formatarHTML(html)}`;
+  } else {
+    bub.innerHTML = formatarHTML(html);
+  }
+
+  row.appendChild(av);
+  row.appendChild(bub);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  return row;
+}
+
+function formatarHTML(texto) {
+  return texto
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>')
+    .replace(/• /g, '• ');
+}
+
+function mostrarTyping() {
+  const msgs = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = 'msg-row bot';
+  row.id = 'typing';
+  const av = document.createElement('div');
+  av.className = 'msg-avatar';
+  av.textContent = '🤖';
+  const bub = document.createElement('div');
+  bub.className = 'typing-bubble';
+  [1,2,3].forEach(() => {
+    const d = document.createElement('div');
+    d.className = 'typing-dot';
+    bub.appendChild(d);
+  });
+  row.appendChild(av);
+  row.appendChild(bub);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removerTyping() {
+  const t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+function atualizarStats() {
+  document.getElementById('stat-perguntas').textContent = totalPerguntas;
+  document.getElementById('stat-respostas').textContent = totalRespostas;
+  document.getElementById('stat-chunks').textContent = totalChunks;
+}
+
+function registrarFontes(chunks) {
+  chunks.forEach(c => {
+    fontesConsultadas[c.source] = (fontesConsultadas[c.source] || 0) + 1;
+  });
+}
+
+function formatarListaPerguntas() {
+  const perguntas = historico
+    .filter(m => m.role === 'user')
+    .slice(-3)
+    .map(m => m.content);
+
+  if (perguntas.length === 0) {
+    return ['Nenhuma pergunta registrada nesta sessão.'];
+  }
+
+  return perguntas;
+}
+
+function formatarFontes() {
+  const fontesOrdenadas = Object.entries(fontesConsultadas)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
+  if (fontesOrdenadas.length === 0) {
+    return ['Nenhum chunk RAG foi acionado nesta sessão.'];
+  }
+
+  return fontesOrdenadas.map(([fonte, total]) => `${fonte} — ${total} consulta(s)`);
+}
+
+function preencherResumo() {
+  document.getElementById('summaryPerguntas').textContent = totalPerguntas;
+  document.getElementById('summaryRespostas').textContent = totalRespostas;
+  document.getElementById('summaryChunks').textContent = totalChunks;
+  document.getElementById('summaryModel').textContent = document.getElementById('stat-model').textContent || '—';
+
+  const perguntas = formatarListaPerguntas();
+  const fontes = formatarFontes();
+
+  const perguntasHtml = perguntas.map(p => `<li>${p}</li>`).join('');
+  const fontesHtml = fontes.map(f => `<li>${f}</li>`).join('');
+
+  document.getElementById('summaryUltimasPerguntas').innerHTML = perguntasHtml;
+  document.getElementById('summaryFontes').innerHTML = fontesHtml;
+}
+
+function encerrarSessao() {
+  preencherResumo();
+  const modal = document.getElementById('sessionModal');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function fecharResumo() {
+  const modal = document.getElementById('sessionModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function novaSessao() {
+  fecharResumo();
+  historico = [];
+  totalPerguntas = 0;
+  totalRespostas = 0;
+  totalChunks = 0;
+  fontesConsultadas = {};
+  document.getElementById('messages').innerHTML = '';
+  document.getElementById('ragBody').innerHTML = '<div class="rag-empty">Envie uma mensagem para ver os chunks de conhecimento recuperados pela busca vetorial.</div>';
+  document.getElementById('suggestions').style.display = 'flex';
+  document.getElementById('stat-model').textContent = '—';
+  for (let i = 1; i <= 6; i++) animarFluxo(0);
+  atualizarStats();
+  window.onload();
+}
+
+function animarFluxo(passo) {
+  for (let i = 1; i <= 6; i++) {
+    document.getElementById(`step${i}`).classList.remove('active');
+  }
+  if (passo > 0) {
+    document.getElementById(`step${passo}`).classList.add('active');
+  }
+}
+
+function exibirRAG(chunks) {
+  const body = document.getElementById('ragBody');
+  if (chunks.length === 0) {
+    body.innerHTML = '<div class="rag-empty">Nenhum chunk relevante encontrado para esta pergunta.</div>';
+    return;
+  }
+  body.innerHTML = '';
+  chunks.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'rag-chunk';
+    const scoreNorm = Math.min(100, Math.round((c.score / 30) * 100));
+    el.innerHTML = `
+      <div class="rag-chunk-source">${c.source}</div>
+      ${c.texto.substring(0, 180)}${c.texto.length > 180 ? '…' : ''}
+      <div class="rag-score">
+        Relevância: ${scoreNorm}%
+        <div class="score-bar"><div class="score-fill" style="width:${scoreNorm}%"></div></div>
+      </div>`;
+    body.appendChild(el);
+  });
+  totalChunks += chunks.length;
+  registrarFontes(chunks);
+  atualizarStats();
+}
+
+// ============================================================
+// ENVIO DE MENSAGEM
+// ============================================================
+async function enviar() {
+  const input = document.getElementById('input');
+  const btn = document.getElementById('sendBtn');
+  const texto = input.value.trim();
+  if (!texto || ocupado) return;
+
+  ocupado = true;
+  btn.disabled = true;
+  input.value = '';
+  document.getElementById('suggestions').style.display = 'none';
+
+  totalPerguntas++;
+  atualizarStats();
+
+  adicionarMensagem('user', texto);
+  historico.push({ role: 'user', content: texto });
+
+  // FLUXO RAG VISUAL
+  animarFluxo(1);
+  await delay(300);
+  animarFluxo(2);
+
+  // RAG: busca chunks relevantes
+  const chunks = buscarRAG(texto);
+  await delay(400);
+  animarFluxo(3);
+  exibirRAG(chunks);
+
+  // Detector explícito de fora do domínio: se a pergunta não se relaciona ao seguro de vida,
+  // interrompe o fluxo e encaminha diretamente para atendimento humano.
+  const foraDoDominio = detectarForaDoDominio(texto, chunks);
+  if (foraDoDominio) {
+    await delay(250);
+    animarFluxo(4);
+    await delay(250);
+    animarFluxo(5);
+    mostrarTyping();
+    await delay(350);
+    removerTyping();
+    animarFluxo(6);
+
+    const respostaForaDominio = `Pelo conteúdo da sua pergunta, esse tema parece estar fora do escopo do VidaBot.
+
+Vou direcionar você para atendimento humano: **Central 24h 0800-XXX-XXXX**, **WhatsApp (11) 9XXXX-XXXX** ou **portal.insurminds.com.br**.
+
+Se quiser, também posso ajudar com dúvidas sobre coberturas, carências, sinistros, documentos ou cancelamento do seguro de vida.`;
+
+    adicionarMensagem('bot', respostaForaDominio, false);
+    historico.push({ role: 'assistant', content: respostaForaDominio });
+    totalRespostas++;
+    document.getElementById('stat-model').textContent = 'Fallback humano';
+    atualizarStats();
+
+    ocupado = false;
+    btn.disabled = false;
+    input.focus();
+    await delay(1500);
+    animarFluxo(0);
+    return;
+  }
+
+  // Monta contexto
+  const contexto = chunks.length > 0
+    ? chunks.map(c => `[${c.source}]: ${c.texto}`).join('\n\n')
+    : 'Sem contexto específico encontrado. Responda com base em conhecimento geral de seguros de vida.';
+
+  await delay(300);
+  animarFluxo(4);
+
+  const systemComContexto = `${SYSTEM_BASE}\n\n===== CONTEXTO DA BASE DE CONHECIMENTO (RAG) =====\n${contexto}\n=================================================`;
+
+  mostrarTyping();
+  animarFluxo(5);
+
+  try {
+    const resp = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mensagem: texto,
+        historico: historico,
+        provider: document.getElementById('provider').value
+      })
+    });
+
+    const data = await resp.json();
+    if (!resp.ok) {
+      throw new Error(data.erro || `Erro HTTP ${resp.status}`);
+    }
+    const resposta = data.resposta || 'Desculpe, ocorreu um erro. Tente novamente.';
+
+    removerTyping();
+    animarFluxo(6);
+
+    adicionarMensagem('bot', resposta, chunks.length > 0);
+    historico.push({ role: 'assistant', content: resposta });
+
+    totalRespostas++;
+    atualizarStats();
+
+    // atualiza label do modelo/provedor exibido
+    const prov = document.getElementById('provider').value;
+    document.getElementById('stat-model').textContent = prov.charAt(0).toUpperCase() + prov.slice(1);
+
+    await delay(1500);
+    animarFluxo(0);
+
+  } catch (e) {
+    removerTyping();
+    animarFluxo(0);
+    adicionarMensagem('bot', `Ops! Não consegui consultar a IA: ${e.message || 'erro desconhecido'}.`);
+  }
+
+  ocupado = false;
+  btn.disabled = false;
+  input.focus();
+}
+
+function enviarRapido(texto) {
+  document.getElementById('input').value = texto;
+  enviar();
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ============================================================
+// INICIALIZAÇÃO
+// ============================================================
+window.onload = () => {
+  adicionarMensagem('bot', `Olá! Sou o **VidaBot**, assistente virtual da **InsurMinds Seguros**. 👋
+
+Estou aqui para ajudar com todas as suas dúvidas sobre **Seguros de Vida** — coberturas, sinistros, documentos, carências e muito mais.
+
+Como posso te ajudar hoje?`);
+};
+</script>
+</body>
+</html>

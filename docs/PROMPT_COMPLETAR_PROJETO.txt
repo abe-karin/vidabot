@@ -1,0 +1,84 @@
+========================================================
+PROMPT — INSURMINDS VIDABOT
+Geração das peças faltantes do projeto acadêmico
+========================================================
+
+CONTEXTO DO PROJETO:
+Estou construindo um chatbot de seguros de vida chamado VidaBot para a empresa fictícia InsurMinds.
+O projeto é uma entrega acadêmica de pós-graduação/MBA com tema: IA aplicada ao setor de seguros.
+
+O que JÁ TENHO:
+- Interface HTML completa (frontend/index.html): chat moderno navy/gold, RAG simulado com keywords,
+  integração com Claude API (claude-sonnet-4-20250514), animação do fluxo RAG, painel de chunks,
+  sidebar com atalhos e estatísticas em tempo real.
+- Backend básico em Flask (app.py) com endpoint /api/chat e busca RAG por keywords no faq.txt
+- Base de conhecimento (faq.txt) com 15 chunks sobre coberturas, sinistros, carências, VGBL/PGBL
+- requirements.txt e README.md
+
+STACK:
+- Python 3.11, Flask, Anthropic SDK
+- Frontend: HTML/CSS/JS puro (sem framework)
+- RAG: busca por keywords (sem embeddings por ora)
+- IA: Claude claude-sonnet-4-20250514
+
+========================================================
+O QUE PRECISO QUE VOCÊ GERE:
+========================================================
+
+1. DIAGRAMA DE ARQUITETURA (texto ASCII ou Mermaid)
+   Mostre o fluxo completo:
+   Usuário → Frontend HTML → Backend Flask → RAG (faq.txt) → Claude API → Resposta
+   Inclua também o fluxo de deploy no Render.
+
+2. RELATÓRIO TÉCNICO (Markdown, ~2 páginas)
+   Estrutura:
+   - Introdução: problema e objetivo
+   - Arquitetura da solução (com referência ao diagrama)
+   - Explicação do RAG implementado (como funciona a busca por keywords, limitações vs embeddings)
+   - Integração com LLM (Claude): system prompt, contexto injetado, histórico de conversa
+   - Tecnologias utilizadas e justificativa
+   - Limitações e melhorias futuras (mencionar ChromaDB + embeddings reais como próximo passo)
+   - Conclusão
+   Tom acadêmico, mas acessível. Mencionar SUSEP, regulação de seguros, IA conversacional.
+
+3. PERGUNTAS DE TESTE (20 perguntas com respostas esperadas)
+   Que um avaliador faria para testar o chatbot. Cubra:
+   - Sinistros (abertura, documentos, prazo)
+   - Carências (morte natural, acidental, suicídio)
+   - Beneficiários
+   - Cancelamento e portabilidade
+   - Coberturas especiais (doenças graves, IPA)
+   - VGBL/PGBL
+   - Atendimento humano
+   Formato: Pergunta | Resposta esperada resumida | Chunk RAG ativado
+
+4. SLIDES DE APRESENTAÇÃO (estrutura em Markdown, 8 slides)
+   Slide 1: Capa — InsurMinds VidaBot
+   Slide 2: Problema de negócio — Por que chatbot de seguros?
+   Slide 3: Arquitetura da solução
+   Slide 4: O que é RAG e como foi implementado
+   Slide 5: Demo — print do chatbot funcionando (descrever o slide)
+   Slide 6: Tecnologias utilizadas
+   Slide 7: Resultados e métricas (simule dados plausíveis)
+   Slide 8: Melhorias futuras e conclusão
+
+5. GUIA DE DEPLOY NO RENDER (passo a passo detalhado)
+   Como subir o projeto Flask no Render gratuitamente:
+   - Criar conta
+   - Subir para GitHub
+   - Configurar Web Service
+   - Definir variável ANTHROPIC_API_KEY
+   - Testar a URL gerada
+
+========================================================
+INSTRUÇÕES DE FORMATO:
+========================================================
+- Responda em português brasileiro
+- Use Markdown para tudo (títulos, listas, código)
+- Para o relatório: use tom acadêmico formal
+- Para o guia de deploy: use tom direto e prático com passos numerados
+- Todos os exemplos de código em blocos ```python``` ou ```bash```
+- O chatbot é focado em Seguros de VIDA (não automóvel, não residencial)
+- A empresa se chama InsurMinds, o bot se chama VidaBot
+
+========================================================
