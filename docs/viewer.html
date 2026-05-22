@@ -253,7 +253,7 @@
     <div class="header-content">
       <h1>📄 Visualizador de Documentação</h1>
       <div class="nav-links">
-        <a href="/docs/index.html">📚 Índice</a>
+        <a href="index.html">📚 Índice</a>
         <a href="/">🤖 VidaBot</a>
       </div>
     </div>
@@ -285,8 +285,8 @@
       }
 
       try {
-        const response = await fetch(`/docs/${file}`);
-        
+        const response = await fetch(`./${file}`);
+
         if (!response.ok) {
           throw new Error(`Erro ${response.status}: ${response.statusText}`);
         }
