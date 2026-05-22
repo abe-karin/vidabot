@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VidaBot - Documentação do Projeto</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1B263B 100%);
+    color: #E0E1DD;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #E8B923;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: #778DA9;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #E8B923;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .doc-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(232, 185, 35, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .doc-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #E8B923;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(232, 185, 35, 0.2);
+  }
+
+  .doc-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .doc-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #E8B923;
+    margin-bottom: 8px;
+  }
+
+  .doc-description {
+    font-size: 0.9rem;
+    color: #778DA9;
+    line-height: 1.5;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    color: #E8B923;
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(232, 185, 35, 0.3);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #778DA9;
+    font-size: 0.9rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: rgba(232, 185, 35, 0.1);
+    border: 1px solid #E8B923;
+    border-radius: 8px;
+    color: #E8B923;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    background: #E8B923;
+    color: #0D1B2A;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 VidaBot - Documentação</h1>
+      <p class="subtitle">InsurMinds Seguros | Assistente Virtual com RAG</p>
+    </header>
+
+    <div class="description">
+      <strong>Sobre o Projeto:</strong> VidaBot é um assistente virtual inteligente especializado em Seguros de Vida, desenvolvido com tecnologia RAG (Retrieval-Augmented Generation) para fornecer respostas precisas e contextualizadas sobre coberturas, sinistros, documentação e regulamentação SUSEP.
+    </div>
+
+    <h2 class="section-title">📋 Documentação Técnica</h2>
+    <div class="docs-grid">
+      <a href="viewer.html?file=analise_tecnica.md" class="doc-card">
+        <span class="doc-icon">🔍</span>
+        <div class="doc-title">Análise Técnica</div>
+        <div class="doc-description">Análise detalhada da arquitetura, tecnologias utilizadas e decisões de design do projeto.</div>
+      </a>
+
+      <a href="viewer.html?file=relatorio_tecnico.md" class="doc-card">
+        <span class="doc-icon">📊</span>
+        <div class="doc-title">Relatório Técnico</div>
+        <div class="doc-description">Relatório completo com métricas, resultados e avaliação técnica do sistema RAG.</div>
+      </a>
+
+      <a href="viewer.html?file=deploy_render.md" class="doc-card">
+        <span class="doc-icon">🚀</span>
+        <div class="doc-title">Deploy no Render</div>
+        <div class="doc-description">Guia passo a passo para deploy da aplicação na plataforma Render.</div>
+      </a>
+    </div>
+
+    <h2 class="section-title">✅ Avaliação e Testes</h2>
+    <div class="docs-grid">
+      <a href="viewer.html?file=autoavaliacao.md" class="doc-card">
+        <span class="doc-icon">⭐</span>
+        <div class="doc-title">Autoavaliação</div>
+        <div class="doc-description">Avaliação crítica do projeto, pontos fortes, melhorias e lições aprendidas.</div>
+      </a>
+
+      <a href="viewer.html?file=evidencias_execucao.md" class="doc-card">
+        <span class="doc-icon">📸</span>
+        <div class="doc-title">Evidências de Execução</div>
+        <div class="doc-description">Descrição das 8 telas/momentos do chatbot em funcionamento para documentação.</div>
+      </a>
+
+      <a href="viewer.html?file=perguntas_teste.md" class="doc-card">
+        <span class="doc-icon">❓</span>
+        <div class="doc-title">Perguntas de Teste</div>
+        <div class="doc-description">Conjunto de perguntas para testar o sistema RAG e validar respostas.</div>
+      </a>
+
+      <a href="viewer.html?file=test_results.md" class="doc-card">
+        <span class="doc-icon">✔️</span>
+        <div class="doc-title">Resultados dos Testes</div>
+        <div class="doc-description">Resultados detalhados dos testes realizados com o VidaBot.</div>
+      </a>
+    </div>
+
+    <h2 class="section-title">📖 Fluxos e Apresentação</h2>
+    <div class="docs-grid">
+      <a href="viewer.html?file=fluxo_atendimento.md" class="doc-card">
+        <span class="doc-icon">🔄</span>
+        <div class="doc-title">Fluxo de Atendimento</div>
+        <div class="doc-description">Diagrama e descrição dos fluxos de atendimento do assistente virtual.</div>
+      </a>
+
+      <a href="viewer.html?file=slides_presentacao.md" class="doc-card">
+        <span class="doc-icon">🎯</span>
+        <div class="doc-title">Slides de Apresentação</div>
+        <div class="doc-description">Material de apresentação do projeto VidaBot em formato Markdown.</div>
+      </a>
+
+      <a href="arquitetura_rag.svg" class="doc-card">
+        <span class="doc-icon">🏗️</span>
+        <div class="doc-title">Arquitetura RAG</div>
+        <div class="doc-description">Diagrama visual da arquitetura do sistema RAG implementado.</div>
+      </a>
+    </div>
+
+    <h2 class="section-title">📄 Documentos Adicionais</h2>
+    <div class="docs-grid">
+      <a href="InsurMinds_VidaBot.pdf" class="doc-card">
+        <span class="doc-icon">📑</span>
+        <div class="doc-title">Documento PDF Principal</div>
+        <div class="doc-description">Documento completo do projeto em formato PDF.</div>
+      </a>
+
+      <a href="relatorio_insurminds_vidabot.pdf" class="doc-card">
+        <span class="doc-icon">📋</span>
+        <div class="doc-title">Relatório PDF</div>
+        <div class="doc-description">Relatório executivo do projeto InsurMinds VidaBot.</div>
+      </a>
+    </div>
+
+    <footer>
+      <p><strong>VidaBot</strong> - Assistente Virtual de Seguros de Vida</p>
+      <p>Desenvolvido com ❤️ pela equipe InsurMinds</p>
+      <a href="/" class="back-link">🤖 Voltar para o VidaBot</a>
+    </footer>
+  </div>
+</body>
+</html>

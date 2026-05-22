@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InsurMinds — Assistente de Seguros de Vida</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -896,11 +897,14 @@
         <button class="quick-btn" onclick="enviarRapido('Como funciona a cobertura por morte natural?')">
           <span class="icon">🫀</span>Cobertura por morte
         </button>
-        <button class="quick-btn" onclick="enviarRapido('Quero acionar meu seguro de vida. Como faço?')">
-          <span class="icon">📋</span>Acionar sinistro
+        <button class="quick-btn" onclick="abrirFluxoSinistro()">
+          <span class="icon">📋</span>Abrir Sinistro
         </button>
-        <button class="quick-btn" onclick="enviarRapido('Qual a diferença entre morte natural e acidental?')">
-          <span class="icon">📄</span>Tipos de cobertura
+        <button class="quick-btn" onclick="enviarRapido('Como solicito a segunda via da minha apólice?')">
+          <span class="icon">📄</span>Segunda Via
+        </button>
+        <button class="quick-btn" onclick="enviarRapido('Falar com atendente humano')">
+          <span class="icon">👤</span>Atendimento Humano
         </button>
         <button class="quick-btn" onclick="enviarRapido('Quais documentos preciso para o resgate?')">
           <span class="icon">📎</span>Documentos necessários
@@ -996,15 +1000,23 @@
         </div>
         <div class="step" id="step2">
           <div class="step-num">2</div>
-          <div class="step-text">Busca vetorial na base</div>
+          <div class="step-text">Tokenização e keywords</div>
         </div>
         <div class="step" id="step3">
           <div class="step-num">3</div>
-          <div class="step-text">Chunks recuperados</div>
+          <div class="step-text">Recuperação de chunks</div>
         </div>
         <div class="step" id="step4">
           <div class="step-num">4</div>
-          <div class="step-text">Contexto injetado no prompt</div>
+          <div class="step-text">Scoring e ranking</div>
+        </div>
+        <div class="step" id="step5">
+          <div class="step-num">5</div>
+          <div class="step-text">Montagem do system prompt</div>
+        </div>
+        <div class="step" id="step6">
+          <div class="step-num">6</div>
+          <div class="step-text">Resposta do LLM</div>
         </div>
         <div class="step" id="step5">
           <div class="step-num">5</div>
@@ -1021,7 +1033,7 @@
 </main>
 
 <footer class="footer">
-  InsurMinds · Projeto acadêmico · I2A2 · 2026 &nbsp;|&nbsp; Powered by Claude AI + RAG
+  InsurMinds · Projeto acadêmico · I2A2 · 2026 &nbsp;|&nbsp; Powered by Claude AI + RAG &nbsp;|&nbsp; <a href="/docs/index.html" target="_blank">📚 Documentação</a>
 </footer>
 
 <div class="session-modal" id="sessionModal" aria-hidden="true">
@@ -1096,16 +1108,28 @@ const BASE_RAG = [
     keywords: ["acionar", "sinistro", "protocolo", "beneficiário", "como fazer", "processo"]
   },
   {
+    id: "faq_abrir_sinistro",
+    source: "Manual de Sinistros",
+    texto: "COMO ABRIR UM SINISTRO: Para iniciar o processo de sinistro, siga estas etapas: 1) Tenha em mãos o número da apólice do segurado; 2) Informe o CPF do beneficiário; 3) Prepare os documentos necessários para upload: certidão de óbito (original ou autenticada), RG e CPF do beneficiário, comprovante de residência, boletim de ocorrência (se acidente), laudo médico (se doença); 4) Acesse o portal de sinistros ou ligue para 0800-XXX-XXXX; 5) Protocole a solicitação e acompanhe pelo número de protocolo. Prazo de análise: até 30 dias após documentação completa. Caso precise de ajuda, solicite atendimento humano.",
+    keywords: ["abrir sinistro", "abrir", "iniciar sinistro", "protocolar", "apólice", "CPF", "documentos", "upload", "certidão"]
+  },
+  {
     id: "faq_documentos",
     source: "Manual de Sinistros",
-    texto: "DOCUMENTOS PARA SINISTRO DE MORTE: • Certidão de óbito original ou cópia autenticada • RG e CPF do beneficiário • Comprovante de residência do beneficiário • Número da apólice • Boletim de Ocorrência (em caso de acidente) • Laudo médico (em caso de doença). Documentos incompletos suspendem o prazo de análise.",
-    keywords: ["documentos", "certidão de óbito", "RG", "CPF", "boletim de ocorrência", "laudo"]
+    texto: "DOCUMENTAÇÃO PARA SINISTRO: • Certidão de óbito original ou cópia autenticada • RG e CPF do beneficiário • Comprovante de residência do beneficiário • Número da apólice • Boletim de Ocorrência (em caso de acidente) • Laudo médico (em caso de doença). Documentos incompletos suspendem o prazo de análise.",
+    keywords: ["documentos", "documentação", "certidão de óbito", "RG", "CPF", "boletim de ocorrência", "laudo"]
   },
   {
     id: "faq_carencia",
     source: "Condições Gerais",
-    texto: "CARÊNCIA NO SEGURO DE VIDA: • Morte natural: 180 dias (6 meses) de carência — exceto para morte acidental, que não tem carência • Suicídio: 2 anos de carência (exigência SUSEP/CNSP) • Doenças preexistentes: podem ter carência especial de até 2 anos dependendo da declaração de saúde • Renovação: carência não se reinicia ao renovar a apólice.",
-    keywords: ["carência", "prazo", "espera", "180 dias", "6 meses", "suicídio", "preexistente"]
+    texto: "CARÊNCIAS: • Morte natural: 180 dias (6 meses) de carência — exceto para morte acidental, que não tem carência • Suicídio: 2 anos de carência (exigência SUSEP/CNSP) • Doenças preexistentes: podem ter carência especial de até 2 anos dependendo da declaração de saúde • Renovação: carência não se reinicia ao renovar a apólice.",
+    keywords: ["carência", "carências", "prazo", "espera", "180 dias", "6 meses", "suicídio", "preexistente"]
+  },
+  {
+    id: "faq_direitos_segurado",
+    source: "Condições Gerais",
+    texto: "DIREITOS DO SEGURADO: O segurado tem direito a: • Receber cópia da apólice e condições gerais • Prazo máximo de 30 dias para análise de sinistro (SUSEP) • Cancelamento em até 7 dias com reembolso integral • Portabilidade para outra seguradora • Indicar e alterar beneficiários a qualquer momento • Consultar saldo e extratos (VGBL/PGBL) • Atendimento pela SUSEP em caso de problemas (0800-021-8484).",
+    keywords: ["direitos", "segurado", "SUSEP", "prazo", "portabilidade", "beneficiário", "reclamação"]
   },
   {
     id: "faq_beneficiario",
@@ -1544,6 +1568,37 @@ Se quiser, também posso ajudar com dúvidas sobre coberturas, carências, sinis
   ocupado = false;
   btn.disabled = false;
   input.focus();
+}
+
+function abrirFluxoSinistro() {
+  // Adiciona mensagem inicial do bot com instruções
+  adicionarMensagem('bot', `🔔 **Abertura de Sinistro - Fluxo Guiado**
+
+Vou te ajudar a iniciar o processo de abertura de sinistro. Para isso, preciso de algumas informações:
+
+📋 **Documentos necessários:**
+• Certidão de óbito (original ou autenticada)
+• RG e CPF do beneficiário
+• Comprovante de residência do beneficiário
+• Número da apólice
+• Boletim de Ocorrência (em caso de acidente)
+• Laudo médico (em caso de doença)
+
+Por favor, me informe:
+1️⃣ **Número da apólice** do segurado
+2️⃣ **CPF do beneficiário**
+
+Após fornecer essas informações, você poderá fazer o upload dos documentos através do portal ou solicitar atendimento humano para concluir o processo.
+
+💬 Você também pode digitar "**falar com humano**" a qualquer momento para ser transferido para um atendente.`);
+
+  // Simula busca RAG para ativar o chunk "COMO ABRIR UM SINISTRO"
+  const chunks = buscarRAG('como abrir um sinistro');
+  if (chunks.length > 0) {
+    mostrarRAG(chunks);
+    document.getElementById('stat-chunks').textContent =
+      parseInt(document.getElementById('stat-chunks').textContent) + chunks.length;
+  }
 }
 
 function enviarRapido(texto) {

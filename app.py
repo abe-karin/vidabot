@@ -255,6 +255,10 @@ def gerar_resposta_llm(mensagens: list[dict[str, Any]], provider_override: str |
 def index():
     return send_from_directory("frontend", "index.html")
 
+@app.route("/docs/<path:filename>")
+def docs(filename):
+    return send_from_directory("docs", filename)
+
 @app.route("/api/chat", methods=["GET", "POST"])
 def chat():
     # Suporte informativo via GET para evitar 405 ao abrir a URL no navegador.
