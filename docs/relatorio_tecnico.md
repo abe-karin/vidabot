@@ -14,7 +14,7 @@ Protótipo para automatizar respostas a perguntas frequentes sobre seguros de vi
 
 Fluxo: Usuário → Frontend (`frontend/index.html`) → `/api/chat` em `app.py` → RAG (busca em `faq.txt`) → LLM (configurado por `.env`) → Resposta.
 
-Diagrama: `docs/arquitetura_rag.svg`.
+Diagrama: [arquitetura_rag.svg](arquitetura_rag.svg).
 ---
 
 ## RAG (implementação)
@@ -57,5 +57,5 @@ VidaBot é um protótipo funcional e facilmente configurável para demonstraçã
 
 **Referências:** `faq.txt`, `app.py`, `docs/arquitetura_rag.svg`.
 
-**Relatório completo:** [docs/relatorio_insurminds_vidabot.pdf](docs/relatorio_insurminds_vidabot.pdf)
+**Relatório completo:** [relatorio_insurminds_vidabot.pdf](relatorio_insurminds_vidabot.pdf)
 
