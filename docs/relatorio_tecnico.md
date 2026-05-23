@@ -1,4 +1,4 @@
-# Relatório Técnico — InsurMinds VidaBot (Conciso)
+# Relatório Técnico — InsurMinds VidaBot (Resumo)
 
 **Resumo**
 
@@ -56,4 +56,6 @@ Escolhas priorizam simplicidade, portabilidade entre provedores e facilidade de 
 VidaBot é um protótipo funcional e facilmente configurável para demonstração de RAG aplicado a seguros de vida. Para produção, focar em recuperação semântica, monitoramento e controles de compliance.
 
 **Referências:** `faq.txt`, `app.py`, `docs/arquitetura_rag.svg`.
+
+**Relatório completo:** [docs/relatorio_insurminds_vidabot.pdf](docs/relatorio_insurminds_vidabot.pdf)
 
