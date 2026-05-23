@@ -80,5 +80,3 @@ Resumo para back‑office:
 
 --------------------------------------------------------------------------------
 Arquivo relacionado: `app.py` (lógica RAG, construção do `system prompt` e seleção de provedor).
-
-Fim do documento

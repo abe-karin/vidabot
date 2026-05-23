@@ -53,6 +53,10 @@ services:
         value: gpt-3.5-turbo
       - key: ANTHROPIC_MODEL
         value: claude-sonnet-4-20250514
+      - key: GEMINI_API_KEY
+        value: ""
+      - key: GEMINI_MODEL
+        value: models/gemini-2.5-flash-lite
 YAML
 
 echo "Arquivo render.yaml criado. Conteúdo (resumo):"

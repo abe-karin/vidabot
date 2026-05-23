@@ -51,5 +51,3 @@ Este documento descreve 8 telas/momentos do chatbot em funcionamento, pronto par
 - Chunk RAG ativado: agregação dos chunks mais acionados durante a sessão (ex.: `CARÊNCIAS`, `DOCUMENTAÇÃO PARA SINISTRO`).
 
 Observação final: os exemplos acima são descrições de telas para documentação; para evidências reais recomenda‑se capturar screenshots locais nos momentos descritos (ou exportar `docs/test_results.md` e logs de RAG para anexar).
-
-Fim do documento
